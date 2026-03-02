@@ -1,0 +1,57 @@
+{
+    "displayName": "Fergus The Time Cat",
+    "uuid": "7f26dc72-85dd-446c-a96c-8a65b94474c1",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk",
+        "diorite",
+        "emery",
+        "flint",
+        "gabbro"
+    ],
+    "watchapp": {
+        "watchface": true
+    },
+    "messageKeys": {
+        "dummy": 10000
+    },
+    "resources": {
+        "media": [
+            {
+                "type": "font",
+                "name": "digital_60",
+                "file": "fonts/digital.ttf",
+                "compatibility": "2.7"
+            },
+            {
+                "type": "font",
+                "name": "digital_24",
+                "file": "fonts/digital.ttf",
+                "compatibility": "2.7"
+            },
+            {
+                "type": "bitmap",
+                "name": "IMAGE_CAT",
+                "file": "images/pebbleCat.png"
+            },
+            {
+                "type": "bitmap",
+                "name": "MENU_ICON",
+                "file": "images/pebbleCatCondensed.png",
+                "menuIcon": true
+            }
+        ]
+    },
+    "name": "Fergus The Time Cat",
+    "shortName": "Fergus The Time Cat",
+    "longName": "Fergus The Time Cat",
+    "versionLabel": "1.0",
+    "companyName": "Adam Edmondson",
+    "appKeys": {
+        "dummy": 10000
+    },
+    "capabilities": []
+}
