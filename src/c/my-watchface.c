@@ -18,6 +18,18 @@ static GFont s_time_font;
 static GFont s_date_font;
 static int s_battery_level;
 
+static bool s_vibrate_on_disconnect = true;
+#define SETTINGS_KEY 1
+
+static void prv_inbox_received_handler(DictionaryIterator* iter, void* context) {
+	Tuple* vibrate_t = dict_find(iter, MESSAGE_KEY_VibrateOnDisconnect);
+	if (vibrate_t) {
+		s_vibrate_on_disconnect = vibrate_t->value->int32 == 1;
+
+		persist_write_bool(SETTINGS_KEY, s_vibrate_on_disconnect);
+	}
+}
+
 static void battery_update_proc(Layer* layer, GContext* ctx)
 {
 	GRect bounds = layer_get_bounds(layer);
@@ -45,7 +57,7 @@ static void battery_callback(BatteryChargeState state)
 
 static void bluetooth_callback(bool connected)
 {
-	if (!connected)
+	if (!connected && s_vibrate_on_disconnect)
 	{
 		vibes_double_pulse();
 	}
@@ -174,6 +186,13 @@ static void init()
 
 	// Show the correct state of the BT connection from the start
 	bluetooth_callback(connection_service_peek_pebble_app_connection());
+
+	// 1. Load the saved setting (default to true)
+	s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY) ? persist_read_bool(SETTINGS_KEY) : true;
+
+	// 2. Register the handler to "listen" for the phone
+	app_message_register_inbox_received(prv_inbox_received_handler);
+	app_message_open(128, 128);
 
 	update_time();
 }

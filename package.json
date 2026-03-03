@@ -1,15 +1,22 @@
 {
   "name": "Fergus The Time Cat",
   "author": "Adam Edmondson",
-  "version": "1.0.0",
-  "keywords": ["pebble-app"],
+  "version": "1.1.0",
+  "keywords": [
+    "pebble-app"
+  ],
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@rebble/clay": "^1.0.8"
+  },
   "pebble": {
     "displayName": "Fergus The Time Cat",
     "uuid": "7f26dc72-85dd-446c-a96c-8a65b94474c1",
     "sdkVersion": "3",
     "enableMultiJS": true,
+    "messageKeys": [
+      "VibrateOnDisconnect"
+    ],
     "targetPlatforms": [
       "aplite",
       "basalt",
@@ -21,39 +28,32 @@
     "watchapp": {
       "watchface": true
     },
-    "messageKeys": [
-      "dummy"
-    ],
     "resources": {
       "media": [
-		{
-			"type": "font",
-			"name": "digital_60",
-			"file": "fonts/digital.ttf",
-			"compatibility":"2.7"
-		},
-		
-		{
-			"type": "font",
-			"name": "digital_24",
-			"file": "fonts/digital.ttf",
-			"compatibility": "2.7"
-		},
-		
-		{
-			"type": "bitmap",
-			"name": "IMAGE_CAT",
-			"file": "images/pebbleCat.png"
-		},
-		
-		{
-			"type": "bitmap",
-			"name": "MENU_ICON",
-			"file": "images/pebbleCatCondensed.png",
-			"menuIcon": true
-		}
-		
-	  ]
+        {
+          "type": "font",
+          "name": "digital_60",
+          "file": "fonts/digital.ttf",
+          "compatibility": "2.7"
+        },
+        {
+          "type": "font",
+          "name": "digital_24",
+          "file": "fonts/digital.ttf",
+          "compatibility": "2.7"
+        },
+        {
+          "type": "bitmap",
+          "name": "IMAGE_CAT",
+          "file": "images/pebbleCat.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "MENU_ICON",
+          "file": "images/pebbleCatCondensed.png",
+          "menuIcon": true
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,21 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "Settings"
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "toggle",
+        "messageKey": "VibrateOnDisconnect",
+        "label": "Vibrate on Disconnect",
+        "defaultValue": true
+      }
+    ]
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save Settings"
+  }
+]

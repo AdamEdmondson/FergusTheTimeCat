@@ -28,14 +28,15 @@ LD = 'arm-none-eabi-ld'
 LIBDIR = '/usr/local/lib64'
 LIBPATH_ST = '-L%s'
 LIB_DIR = 'node_modules'
-LIB_JSON = []
+LIB_JSON = [{'name': '@rebble/clay', 'version': '1.0.8', 'description': 'Pebble Config Framework', 'scripts': {'test-travis': './node_modules/.bin/gulp && ./node_modules/.bin/karma start ./test/karma.conf.js --single-run --browsers chromeTravisCI', 'test-debug': '(export DEBUG=true && ./node_modules/.bin/gulp && ./node_modules/.bin/karma start ./test/karma.conf.js --no-single-run)', 'test': './node_modules/.bin/gulp && ./node_modules/.bin/karma start ./test/karma.conf.js --single-run', 'lint': './node_modules/.bin/eslint ./', 'build': 'gulp', 'dev': 'gulp dev', 'pebble-clean': 'rm -rf tmp src/js/index.js && pebble clean', 'pebble-publish': 'npm run pebble-clean && npm run build && pebble build && pebble package publish && npm run pebble-clean', 'pebble-build': 'npm run build && pebble build'}, 'repository': {'type': 'git', 'url': 'git+https://github.com/pebble-dev/clay.git'}, 'keywords': ['pebble', 'config', 'configuration', 'pebble-package'], 'author': 'Pebble Technology', 'license': 'MIT', 'bugs': {'url': 'https://github.com/pebble-dev/clay/issues'}, 'pebble': {'projectType': 'package', 'sdkVersion': '3', 'targetPlatforms': ['aplite', 'basalt', 'chalk', 'diorite', 'emery', 'flint', 'gabbro'], 'resources': {'media': []}, 'capabilities': ['configurable']}, 'homepage': 'https://github.com/pebble-dev/clay#readme', 'devDependencies': {'autoprefixer': '^10.4.23', 'bourbon': '^4.2.6', 'browserify': '^13.0.0', 'browserify-istanbul': '^3.0.1', 'chai': '^3.4.1', 'deamdify': '^0.2.0', 'deepcopy': '^0.6.1', 'del': '^2.0.2', 'eslint': '^1.5.1', 'eslint-config-pebble': '^1.2.0', 'eslint-plugin-standard': '^1.3.1', 'gulp': '^5.0.1', 'gulp-autoprefixer': '^3.1.0', 'gulp-htmlmin': '^1.3.0', 'gulp-inline': '^0.1.3', 'gulp-insert': '^0.5.0', 'gulp-sass': '^6.0.1', 'gulp-sourcemaps': '^1.6.0', 'gulp-uglify': '^1.5.2', 'joi': '^6.10.1', 'karma': '^6.4.0', 'karma-browserify': '^8.1.0', 'karma-chrome-launcher': '^3.2.0', 'karma-coverage': '^2.2.1', 'karma-mocha': '^2.0.1', 'karma-mocha-reporter': '^2.2.5', 'karma-source-map-support': '^1.4.0', 'karma-threshold-reporter': '^0.1.15', 'mocha': '^11.7.5', 'postcss': '^8.5.6', 'require-from-string': '^2.0.2', 'sass': '^1.94.2', 'sinon': '^1.17.3', 'stringify': '^3.2.0', 'through': '^2.3.8', 'tosource': '^1.0.0', 'vinyl-buffer': '^1.0.0', 'vinyl-source-stream': '^2.0.0', 'watchify': '^3.11.1'}, 'path': 'node_modules/@rebble/clay/dist', 'js_paths': ['node_modules/@rebble/clay/dist/js/index.js']}]
+LIB_RESOURCES_JSON = {'@rebble/clay': []}
 LIB_ST = '-l%s'
 LINKFLAGS = ['-mcpu=cortex-m3', '-mthumb', '-Wl,--gc-sections', '-Wl,--warn-common', '-fPIE', '-Os']
 LINKFLAGS_MACBUNDLE = ['-bundle', '-undefined', 'dynamic_lookup']
 LINKFLAGS_cshlib = ['-shared']
 LINKFLAGS_cstlib = ['-Wl,-Bstatic']
 LINK_CC = ['arm-none-eabi-gcc']
-MESSAGE_KEYS = {'dummy': 10000}
+MESSAGE_KEYS = {'VibrateOnDisconnect': 10000}
 MESSAGE_KEYS_DEFINITION = '/home/adamj/my-watchface/build/src/message_keys.auto.c'
 MESSAGE_KEYS_HEADER = '/home/adamj/my-watchface/build/include/message_keys.auto.h'
 MESSAGE_KEYS_JSON = '/home/adamj/my-watchface/build/js/message_keys.json'
@@ -46,7 +47,7 @@ PEBBLE_SDK_ROOT = '/home/adamj/.pebble-sdk/SDKs/current/sdk-core/pebble'
 PLATFORM = {'NAME': 'diorite', 'MAX_APP_BINARY_SIZE': 65536, 'MAX_APP_MEMORY_SIZE': 65536, 'MAX_WORKER_MEMORY_SIZE': 10240, 'MAX_RESOURCES_SIZE_APPSTORE': 262144, 'MAX_RESOURCES_SIZE': 1048576, 'DEFINES': ['PBL_PLATFORM_DIORITE', 'PBL_BW', 'PBL_RECT', 'PBL_MICROPHONE', 'PBL_HEALTH', 'PBL_SMARTSTRAP', 'PBL_DISPLAY_WIDTH=144', 'PBL_DISPLAY_HEIGHT=168'], 'BUILD_DIR': 'diorite', 'BUNDLE_BIN_DIR': 'diorite', 'ADDITIONAL_TEXT_LINES_FOR_PEBBLE_H': [], 'MAX_FONT_GLYPH_SIZE': 256, 'TAGS': ['diorite', 'bw', 'rect', 'mic', 'strap', 'health', '144w', '168h']}
 PLATFORM_NAME = 'diorite'
 PREFIX = '/usr/local'
-PROJECT_INFO = {'displayName': 'Fergus The Time Cat', 'uuid': '7f26dc72-85dd-446c-a96c-8a65b94474c1', 'sdkVersion': '3', 'enableMultiJS': True, 'targetPlatforms': ['aplite', 'basalt', 'chalk', 'diorite', 'emery', 'flint'], 'watchapp': {'watchface': True}, 'messageKeys': {'dummy': 10000}, 'resources': {'media': [{'type': 'font', 'name': 'digital_60', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'font', 'name': 'digital_24', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'bitmap', 'name': 'IMAGE_CAT', 'file': 'images/pebbleCat.png'}, {'type': 'bitmap', 'name': 'MENU_ICON', 'file': 'images/pebbleCatCondensed.png', 'menuIcon': True}]}, 'name': 'Fergus The Time Cat', 'shortName': 'Fergus The Time Cat', 'longName': 'Fergus The Time Cat', 'versionLabel': '1.0', 'companyName': 'Adam Edmondson', 'appKeys': {'dummy': 10000}}
+PROJECT_INFO = {'displayName': 'Fergus The Time Cat', 'uuid': '7f26dc72-85dd-446c-a96c-8a65b94474c1', 'sdkVersion': '3', 'enableMultiJS': True, 'messageKeys': {'VibrateOnDisconnect': 10000}, 'targetPlatforms': ['aplite', 'basalt', 'chalk', 'diorite', 'emery', 'flint'], 'watchapp': {'watchface': True}, 'resources': {'media': [{'type': 'font', 'name': 'digital_60', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'font', 'name': 'digital_24', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'bitmap', 'name': 'IMAGE_CAT', 'file': 'images/pebbleCat.png'}, {'type': 'bitmap', 'name': 'MENU_ICON', 'file': 'images/pebbleCatCondensed.png', 'menuIcon': True}]}, 'name': 'Fergus The Time Cat', 'shortName': 'Fergus The Time Cat', 'longName': 'Fergus The Time Cat', 'versionLabel': '1.1', 'companyName': 'Adam Edmondson', 'appKeys': {'VibrateOnDisconnect': 10000}}
 REQUESTED_PLATFORMS = ['aplite', 'basalt', 'chalk', 'diorite', 'emery', 'flint']
 RESOURCES_JSON = [{'type': 'font', 'name': 'digital_60', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'font', 'name': 'digital_24', 'file': 'fonts/digital.ttf', 'compatibility': '2.7'}, {'type': 'bitmap', 'name': 'IMAGE_CAT', 'file': 'images/pebbleCat.png'}, {'type': 'bitmap', 'name': 'MENU_ICON', 'file': 'images/pebbleCatCondensed.png', 'menuIcon': True}]
 RPATH_ST = '-Wl,-rpath,%s'
@@ -61,7 +62,7 @@ STLIB_MARKER = None
 STLIB_ST = '-l%s'
 SUPPORTED_PLATFORMS = ['emery', 'aplite', 'basalt', 'flint', 'chalk', 'diorite']
 TARGET_PLATFORMS = ['flint', 'emery', 'diorite', 'chalk', 'basalt', 'aplite']
-TIMESTAMP = 1772496269
+TIMESTAMP = 1772558600
 USE_GROUPS = True
 VERBOSE = 0
 WEBPACK = ['/home/adamj/.pebble-sdk/SDKs/current/node_modules/.bin/webpack']

@@ -1,4 +1,4 @@
-# project  configured on Tue Mar  3 00:04:29 2026 by
+# project  configured on Tue Mar  3 17:23:20 2026 by
 # waf 2.1.4 (abi 20, python 30d0bf0 on linux)
 # using /home/adamj/.pebble-sdk/SDKs/current/sdk-core/pebble/waf configure
 #
@@ -370,7 +370,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32mflint | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/flint/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iflint', '-I../flint', '-DRELEASE', '-DPBL_PLATFORM_FLINT', '-DPBL_BW', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/flint/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iflint', '-I../flint', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/flint', '-DRELEASE', '-DPBL_PLATFORM_FLINT', '-DPBL_BW', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33mflint | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']
@@ -733,7 +733,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32memery | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/emery/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iemery', '-I../emery', '-DRELEASE', '-DPBL_PLATFORM_EMERY', '-DPBL_COLOR', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_SMARTSTRAP_POWER', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=200', '-DPBL_DISPLAY_HEIGHT=228', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/emery/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iemery', '-I../emery', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/emery', '-DRELEASE', '-DPBL_PLATFORM_EMERY', '-DPBL_COLOR', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_SMARTSTRAP_POWER', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=200', '-DPBL_DISPLAY_HEIGHT=228', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33memery | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']
@@ -1096,7 +1096,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32mdiorite | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/diorite/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Idiorite', '-I../diorite', '-DRELEASE', '-DPBL_PLATFORM_DIORITE', '-DPBL_BW', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_HEALTH', '-DPBL_SMARTSTRAP', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/diorite/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Idiorite', '-I../diorite', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/diorite', '-DRELEASE', '-DPBL_PLATFORM_DIORITE', '-DPBL_BW', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_HEALTH', '-DPBL_SMARTSTRAP', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33mdiorite | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']
@@ -1459,7 +1459,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32mchalk | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Ichalk', '-I../chalk', '-DRELEASE', '-DPBL_PLATFORM_CHALK', '-DPBL_COLOR', '-DPBL_ROUND', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_SMARTSTRAP_POWER', '-DPBL_DISPLAY_WIDTH=180', '-DPBL_DISPLAY_HEIGHT=180', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Ichalk', '-I../chalk', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/chalk', '-DRELEASE', '-DPBL_PLATFORM_CHALK', '-DPBL_COLOR', '-DPBL_ROUND', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_SMARTSTRAP_POWER', '-DPBL_DISPLAY_WIDTH=180', '-DPBL_DISPLAY_HEIGHT=180', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33mchalk | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']
@@ -1822,7 +1822,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32mbasalt | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Ibasalt', '-I../basalt', '-DRELEASE', '-DPBL_PLATFORM_BASALT', '-DPBL_COLOR', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_SMARTSTRAP_POWER', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Ibasalt', '-I../basalt', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/basalt', '-DRELEASE', '-DPBL_PLATFORM_BASALT', '-DPBL_COLOR', '-DPBL_RECT', '-DPBL_MICROPHONE', '-DPBL_SMARTSTRAP', '-DPBL_HEALTH', '-DPBL_COMPASS', '-DPBL_SMARTSTRAP_POWER', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33mbasalt | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']
@@ -2185,7 +2185,7 @@ int main(int argc, char **argv) {
 <==
 [1/2] Compiling [32maplite | c: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/test.c -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o[0m
 
-['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iaplite', '-I../aplite', '-DRELEASE', '-DPBL_PLATFORM_APLITE', '-DPBL_BW', '-DPBL_RECT', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
+['arm-none-eabi-gcc', '-fPIC', '-I../../../../.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include', '-I.', '-I..', '-Iinclude', '-I../include', '-Isrc', '-I../src', '-Iaplite', '-I../aplite', '-I../../../node_modules/@rebble/clay/dist/include', '-I../../../node_modules/@rebble/clay/dist/include/@rebble/clay/aplite', '-DRELEASE', '-DPBL_PLATFORM_APLITE', '-DPBL_BW', '-DPBL_RECT', '-DPBL_COMPASS', '-DPBL_DISPLAY_WIDTH=144', '-DPBL_DISPLAY_HEIGHT=168', '-DPBL_SDK_3', '../test.c', '-c', '-o/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o']
 [2/2] Linking [33maplite | cshlib: build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/test.c.1.o -> build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so[0m
 
 ['arm-none-eabi-gcc', '-shared', 'test.c.1.o', '-o', '/home/adamj/my-watchface/build/.conf_check_fe09c04780f3cfcccc06b3ffc4ded4f4/testbuild/libtestprog.so', '-Wl,-Bstatic', '-Wl,-Bdynamic']

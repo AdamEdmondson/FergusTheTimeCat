@@ -3,6 +3,9 @@
     "uuid": "7f26dc72-85dd-446c-a96c-8a65b94474c1",
     "sdkVersion": "3",
     "enableMultiJS": true,
+    "messageKeys": {
+        "VibrateOnDisconnect": 10000
+    },
     "targetPlatforms": [
         "aplite",
         "basalt",
@@ -13,9 +16,6 @@
     ],
     "watchapp": {
         "watchface": true
-    },
-    "messageKeys": {
-        "dummy": 10000
     },
     "resources": {
         "media": [
@@ -47,10 +47,12 @@
     "name": "Fergus The Time Cat",
     "shortName": "Fergus The Time Cat",
     "longName": "Fergus The Time Cat",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "companyName": "Adam Edmondson",
     "appKeys": {
-        "dummy": 10000
+        "VibrateOnDisconnect": 10000
     },
-    "capabilities": []
+    "capabilities": [
+        "configurable"
+    ]
 }
