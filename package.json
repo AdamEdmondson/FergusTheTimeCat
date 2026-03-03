@@ -16,8 +16,7 @@
       "chalk",
       "diorite",
       "emery",
-      "flint",
-      "gabbro"
+      "flint"
     ],
     "watchapp": {
       "watchface": true
