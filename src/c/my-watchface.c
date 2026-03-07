@@ -23,10 +23,16 @@ static bool s_vibrate_on_disconnect = true;
 
 static void prv_inbox_received_handler(DictionaryIterator* iter, void* context) {
 	Tuple* vibrate_t = dict_find(iter, MESSAGE_KEY_VibrateOnDisconnect);
-	if (vibrate_t) {
-		s_vibrate_on_disconnect = vibrate_t->value->int32 == 1;
 
-		persist_write_bool(SETTINGS_KEY, s_vibrate_on_disconnect);
+	if (vibrate_t)
+	{
+		bool new_val = vibrate_t->value->int32 == 1;
+
+		if (new_val != s_vibrate_on_disconnect)
+		{
+			s_vibrate_on_disconnect = new_val;
+			persist_write_bool(SETTINGS_KEY, s_vibrate_on_disconnect);
+		}
 	}
 }
 
@@ -48,11 +54,14 @@ static void battery_update_proc(Layer* layer, GContext* ctx)
 
 static void battery_callback(BatteryChargeState state)
 {
-	// Record the new battery level
-	s_battery_level = state.charge_percent;
+	if (s_battery_level != state.charge_percent)
+	{
+		// Record the new battery level
+		s_battery_level = state.charge_percent;
 
-	// Update meter
-	layer_mark_dirty(s_battery_layer);
+		// Update meter
+		layer_mark_dirty(s_battery_layer);
+	}
 }
 
 static void bluetooth_callback(bool connected)
@@ -126,7 +135,8 @@ static void main_window_unload(Window* window)
 	fonts_unload_custom_font(s_date_font);
 }
 
-static void update_time() {
+static void update_time(TimeUnits units_changed)
+{
 	// Get a tm structure
 	time_t temp = time(NULL);
 	struct tm* tick_time = localtime(&temp);
@@ -138,17 +148,21 @@ static void update_time() {
 	// Display this time on the TextLayer
 	text_layer_set_text(s_time_layer, s_buffer);
 
-	// Write the current date into a buffer
-	static char s_date_buffer[16];
-	strftime(s_date_buffer, sizeof(s_date_buffer), "%a %b %d", tick_time);
+	if (units_changed & DAY_UNIT)
+	{
+		// Write the current date into a buffer
+		static char s_date_buffer[16];
+		strftime(s_date_buffer, sizeof(s_date_buffer), "%a %b %d", tick_time);
 
-	// Display the date
-	text_layer_set_text(s_date_layer, s_date_buffer);
+		// Display the date
+		text_layer_set_text(s_date_layer, s_date_buffer);
+	}
+
 }
 
 static void tick_handler(struct tm* tick_time, TimeUnits units_changed)
 {
-	update_time();
+	update_time(units_changed);
 }
 
 static void init()
@@ -169,13 +183,11 @@ static void init()
 	// Show the Window on the watch, with animated=true
 	window_stack_push(s_main_window, true);
 
-	// Register with TickTimerService
+	// Register with services
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-
-	// Register for battery level updates
 	battery_state_service_subscribe(battery_callback);
 
-	// Ensure battery level is displayed from the start
+	// Battery level is displayed from the start
 	battery_callback(battery_state_service_peek());
 
 	// Register for Bluetooth connection updates
@@ -184,21 +196,23 @@ static void init()
 		.pebble_app_connection_handler = bluetooth_callback
 	});
 
-	// Show the correct state of the BT connection from the start
-	bluetooth_callback(connection_service_peek_pebble_app_connection());
-
-	// 1. Load the saved setting (default to true)
+	// Load the saved setting (default to true)
 	s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY) ? persist_read_bool(SETTINGS_KEY) : true;
 
-	// 2. Register the handler to "listen" for the phone
+	// Register the handler to "listen" for the phone
 	app_message_register_inbox_received(prv_inbox_received_handler);
 	app_message_open(128, 128);
 
-	update_time();
+	update_time(DAY_UNIT | HOUR_UNIT | MINUTE_UNIT);
 }
 
 static void deinit() 
 {
+	tick_timer_service_unsubscribe();
+	battery_state_service_unsubscribe();
+	connection_service_unsubscribe();
+	app_message_deregister_callbacks();
+
 	// Destroy Window
 	window_destroy(s_main_window);
 }
