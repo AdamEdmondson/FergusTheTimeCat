@@ -1,59 +1,60 @@
 {
-  "name": "Fergus The Time Cat",
-  "author": "Adam Edmondson",
-  "version": "1.2.0",
-  "keywords": [
-    "pebble-app"
-  ],
-  "private": true,
-  "dependencies": {
-    "@rebble/clay": "^1.0.8"
-  },
-  "pebble": {
-    "displayName": "Fergus The Time Cat",
-    "uuid": "7f26dc72-85dd-446c-a96c-8a65b94474c1",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "messageKeys": [
-      "VibrateOnDisconnect"
-    ],
-    "targetPlatforms": [
-      "aplite",
-      "basalt",
-      "chalk",
-      "diorite",
-      "emery",
-      "flint"
-    ],
-    "watchapp": {
-      "watchface": true
+    "author": "Adam Edmondson",
+    "dependencies": {
+        "@rebble/clay": "^1.0.8"
     },
-    "resources": {
-      "media": [
-        {
-          "type": "font",
-          "name": "digital_60",
-          "file": "fonts/digital.ttf",
-          "compatibility": "2.7"
+    "keywords": [
+        "pebble-app"
+    ],
+    "name": "fergus-the-time-cat",
+    "pebble": {
+        "displayName": "Fergus The Time Cat",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "VibrateOnDisconnect"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "compatibility": "2.7",
+                    "file": "fonts/digital.ttf",
+                    "name": "digital_60",
+                    "type": "font"
+                },
+                {
+                    "compatibility": "2.7",
+                    "file": "fonts/digital.ttf",
+                    "name": "digital_24",
+                    "type": "font"
+                },
+                {
+                    "file": "images/pebbleCat.png",
+                    "name": "IMAGE_CAT",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/pebbleCatCondensed.png",
+                    "menuIcon": true,
+                    "name": "MENU_ICON",
+                    "type": "bitmap"
+                }
+            ]
         },
-        {
-          "type": "font",
-          "name": "digital_24",
-          "file": "fonts/digital.ttf",
-          "compatibility": "2.7"
-        },
-        {
-          "type": "bitmap",
-          "name": "IMAGE_CAT",
-          "file": "images/pebbleCat.png"
-        },
-        {
-          "type": "bitmap",
-          "name": "MENU_ICON",
-          "file": "images/pebbleCatCondensed.png",
-          "menuIcon": true
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "emery",
+            "gabbro",
+            "flint"
+        ],
+        "uuid": "7f26dc72-85dd-446c-a96c-8a65b94474c1",
+        "watchapp": {
+            "watchface": true
         }
-      ]
-    }
-  }
+    },
+    "version": "1.2.0"
 }
