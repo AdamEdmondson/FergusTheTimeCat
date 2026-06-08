@@ -17,26 +17,40 @@
         "resources": {
             "media": [
                 {
-                    "compatibility": "2.7",
                     "file": "fonts/digital.ttf",
                     "name": "digital_60",
+                    "targetPlatforms": null,
                     "type": "font"
                 },
                 {
-                    "compatibility": "2.7",
                     "file": "fonts/digital.ttf",
                     "name": "digital_24",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/digital.ttf",
+                    "name": "digital_36",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/digital.ttf",
+                    "name": "digital_72",
+                    "targetPlatforms": null,
                     "type": "font"
                 },
                 {
                     "file": "images/pebbleCat.png",
                     "name": "IMAGE_CAT",
+                    "targetPlatforms": null,
                     "type": "bitmap"
                 },
                 {
                     "file": "images/pebbleCatCondensed.png",
                     "menuIcon": true,
                     "name": "MENU_ICON",
+                    "targetPlatforms": null,
                     "type": "bitmap"
                 }
             ]
