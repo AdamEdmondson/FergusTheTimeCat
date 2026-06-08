@@ -19,25 +19,43 @@
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_60",
-                    "targetPlatforms": null,
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite",
+                        "flint"
+                    ],
                     "type": "font"
                 },
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_24",
-                    "targetPlatforms": null,
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite",
+                        "flint"
+                    ],
                     "type": "font"
                 },
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_36",
-                    "targetPlatforms": null,
+                    "targetPlatforms": [
+                        "emery",
+                        "gabbro"
+                    ],
                     "type": "font"
                 },
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_72",
-                    "targetPlatforms": null,
+                    "targetPlatforms": [
+                        "emery",
+                        "gabbro"
+                    ],
                     "type": "font"
                 },
                 {
