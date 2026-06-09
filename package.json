@@ -61,7 +61,13 @@
                 {
                     "file": "images/pebbleCat.png",
                     "name": "IMAGE_CAT",
-                    "targetPlatforms": null,
+                    "targetPlatforms": [
+                        "aplite",
+                        "basalt",
+                        "chalk",
+                        "diorite",
+                        "flint"
+                    ],
                     "type": "bitmap"
                 },
                 {
@@ -69,6 +75,15 @@
                     "menuIcon": true,
                     "name": "MENU_ICON",
                     "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/pebbleCatBig.png",
+                    "name": "IMAGE_CAT",
+                    "targetPlatforms": [
+                        "emery",
+                        "gabbro"
+                    ],
                     "type": "bitmap"
                 }
             ]
@@ -88,5 +103,5 @@
             "watchface": true
         }
     },
-    "version": "1.3.0"
+    "version": "1.4.0"
 }

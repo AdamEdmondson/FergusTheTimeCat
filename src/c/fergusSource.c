@@ -119,7 +119,7 @@ static void main_window_load(Window* window)
         
         bat_w = (w * 80) / 100;
         bat_x = (w - bat_w) / 2;
-        bat_y = (h * 58) / 100;
+        bat_y = (h * 59) / 100;
     #endif
 
     // Cat Layer
