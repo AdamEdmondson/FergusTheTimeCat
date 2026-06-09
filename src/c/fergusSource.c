@@ -108,18 +108,18 @@ static void main_window_load(Window* window)
         bat_x = (w - bat_w) / 2;
         bat_y = (h * 58) / 100; 
     #else
-        cat_y = -(h * 6) / 100;
+        cat_y = -(h * 1) / 100;
         cat_h = (h * 50) / 100;
         
-        date_y = (h * 38) / 100;
+        date_y = (h * 43) / 100;
         date_h = (h * 18) / 100;
         
-        time_y = (h * 55) / 100;
+        time_y = (h * 60) / 100;
         time_h = (h * 42) / 100;
         
         bat_w = (w * 80) / 100;
         bat_x = (w - bat_w) / 2;
-        bat_y = (h * 59) / 100;
+        bat_y = (h * 64) / 100;
     #endif
 
     // Cat Layer
