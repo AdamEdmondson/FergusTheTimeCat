@@ -20,7 +20,7 @@
             "media": [
                 {
                     "file": "fonts/digital.ttf",
-                    "name": "digital_60",
+                    "name": "digital_24",
                     "targetPlatforms": [
                         "aplite",
                         "basalt",
@@ -32,7 +32,7 @@
                 },
                 {
                     "file": "fonts/digital.ttf",
-                    "name": "digital_24",
+                    "name": "digital_60",
                     "targetPlatforms": [
                         "aplite",
                         "basalt",

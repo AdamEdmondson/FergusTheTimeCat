@@ -163,6 +163,7 @@ static void main_window_load(Window* window)
     s_cat_layer = bitmap_layer_create(GRect(0, cat_y, w, cat_h));
 		bitmap_layer_set_background_color(s_cat_layer, GColorClear);
     bitmap_layer_set_bitmap(s_cat_layer, s_cat_bitmap);
+		bitmap_layer_set_compositing_mode(s_cat_layer, GCompOpSet);
     bitmap_layer_set_alignment(s_cat_layer, GAlignCenter);
     layer_add_child(window_layer, bitmap_layer_get_layer(s_cat_layer));
 
