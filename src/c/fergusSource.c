@@ -20,21 +20,58 @@ static GFont s_date_font;
 static int s_battery_level;
 
 static bool s_vibrate_on_disconnect = true;
-#define SETTINGS_KEY 1
+static GColor s_text_colour;
+static GColor s_background_colour;
 
-static void prv_inbox_received_handler(DictionaryIterator* iter, void* context) {
+#define SETTINGS_KEY_VIBRATE 1
+#define SETTINGS_KEY_TEXT_COLOUR 2
+#define SETTINGS_KEY_BACKGROUND_COLOUR 3
+
+static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
+{
     Tuple* vibrate_t = dict_find(iter, MESSAGE_KEY_VibrateOnDisconnect);
-
     if (vibrate_t)
     {
-        bool new_val = vibrate_t->value->int32 == 1;
+        bool new_vibe = vibrate_t->value->int32 == 1;
 
-        if (new_val != s_vibrate_on_disconnect)
+        if (new_vibe != s_vibrate_on_disconnect)
         {
-            s_vibrate_on_disconnect = new_val;
-            persist_write_bool(SETTINGS_KEY, s_vibrate_on_disconnect);
+            s_vibrate_on_disconnect = new_vibe;
+            persist_write_bool(SETTINGS_KEY_VIBRATE, s_vibrate_on_disconnect);
         }
     }
+	
+	Tuple* text_colour_t = dict_find(iter, MESSAGE_KEY_TextColour);
+    if (text_colour_t)
+		{
+        int32_t colour_val = text_colour_t->value->int32;
+        GColor new_text_colour = GColorFromHEX(colour_val);
+        
+        if (!gcolor_equal(new_text_colour, s_text_colour))
+				{
+            s_text_colour = new_text_colour;
+            persist_write_int(SETTINGS_KEY_TEXT_COLOUR, colour_val);
+        }
+    }
+	
+	Tuple* background_colour_t = dict_find(iter, MESSAGE_KEY_BackgroundColour);
+    if (background_colour_t)
+		{
+        int32_t colour_val = background_colour_t->value->int32;
+        GColor new_background_colour = GColorFromHEX(colour_val);
+        
+        if (!gcolor_equal(new_background_colour, s_background_colour))
+				{
+            s_background_colour = new_background_colour;
+            persist_write_int(SETTINGS_KEY_BACKGROUND_COLOUR, colour_val);
+        }
+    }
+	
+	window_set_background_color(s_main_window, s_background_colour);
+  text_layer_set_text_color(s_time_layer, s_text_colour);
+  text_layer_set_text_color(s_date_layer, s_text_colour);
+	layer_mark_dirty(s_battery_layer);
+	
 }
 
 static void battery_update_proc(Layer* layer, GContext* ctx)
@@ -44,11 +81,11 @@ static void battery_update_proc(Layer* layer, GContext* ctx)
     int width = (s_battery_level * bounds.size.w) / 100;
 
     // Background
-    graphics_context_set_fill_color(ctx, GColorWhite);
+    graphics_context_set_fill_color(ctx, s_background_colour);
     graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 
     // Bar
-    graphics_context_set_fill_color(ctx, GColorBlack);
+    graphics_context_set_fill_color(ctx, s_text_colour);
     graphics_fill_rect(ctx, GRect(0, 0, width, bounds.size.h), 0, GCornerNone);
 }
 
@@ -101,7 +138,7 @@ static void main_window_load(Window* window)
         date_y = (h * 40) / 100;
         date_h = (h * 15) / 100; 
         
-        time_y = (h * 52) / 100;
+        time_y = (h * 57) / 100;
         time_h = (h * 42) / 100; 
         
         bat_w = (w * 80) / 100;  
@@ -124,6 +161,7 @@ static void main_window_load(Window* window)
 
     // Cat Layer
     s_cat_layer = bitmap_layer_create(GRect(0, cat_y, w, cat_h));
+		bitmap_layer_set_background_color(s_cat_layer, GColorClear);
     bitmap_layer_set_bitmap(s_cat_layer, s_cat_bitmap);
     bitmap_layer_set_alignment(s_cat_layer, GAlignCenter);
     layer_add_child(window_layer, bitmap_layer_get_layer(s_cat_layer));
@@ -131,7 +169,7 @@ static void main_window_load(Window* window)
     // Date Layer
     s_date_layer = text_layer_create(GRect(0, date_y, w, date_h));
     text_layer_set_background_color(s_date_layer, GColorClear);
-    text_layer_set_text_color(s_date_layer, GColorBlack);
+    text_layer_set_text_color(s_date_layer, s_text_colour);
     text_layer_set_font(s_date_layer, s_date_font);
     text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
     layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
@@ -139,7 +177,7 @@ static void main_window_load(Window* window)
     // Time Layer
     s_time_layer = text_layer_create(GRect(0, time_y, w, time_h));
     text_layer_set_background_color(s_time_layer, GColorClear);
-    text_layer_set_text_color(s_time_layer, GColorBlack);
+    text_layer_set_text_color(s_time_layer, s_text_colour);
     text_layer_set_text(s_time_layer, "00:00");
     text_layer_set_font(s_time_layer, s_time_font);
     text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
@@ -196,8 +234,12 @@ static void tick_handler(struct tm* tick_time, TimeUnits units_changed)
 
 static void init()
 {
+		s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY_VIBRATE) ? persist_read_bool(SETTINGS_KEY_VIBRATE) : true;
+		s_text_colour = persist_exists(SETTINGS_KEY_TEXT_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_TEXT_COLOUR)) : GColorBlack;
+    s_background_colour = persist_exists(SETTINGS_KEY_BACKGROUND_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_BACKGROUND_COLOUR)) : GColorWhite;
+	
     s_main_window = window_create();
-    window_set_background_color(s_main_window, GColorWhite);
+    window_set_background_color(s_main_window, s_background_colour);
 
     // Set handlers to manage the elements inside the Window
     window_set_window_handlers(s_main_window, (WindowHandlers)
@@ -222,7 +264,7 @@ static void init()
     });
 
     // Load the saved setting (default to true)
-    s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY) ? persist_read_bool(SETTINGS_KEY) : true;
+    s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY_VIBRATE) ? persist_read_bool(SETTINGS_KEY_VIBRATE) : true;
 
     // Register the handler for the phone
     app_message_register_inbox_received(prv_inbox_received_handler);

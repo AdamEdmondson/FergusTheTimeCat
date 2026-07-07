@@ -11,6 +11,18 @@
         "messageKey": "VibrateOnDisconnect",
         "label": "Vibrate on Disconnect",
         "defaultValue": true
+      },
+			{
+        "type": "color",
+        "messageKey": "TextColour",
+        "label": "Text Colour",
+        "defaultValue": "0x000000"
+      },
+      {
+        "type": "color",
+        "messageKey": "BackgroundColour",
+        "label": "Background Colour",
+        "defaultValue": "0xFFFFFF"
       }
     ]
   },
