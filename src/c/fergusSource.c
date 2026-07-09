@@ -18,6 +18,7 @@ static GBitmap* s_cat_bitmap;
 static GFont s_time_font;
 static GFont s_date_font;
 static int s_battery_level;
+static bool s_invert_cat = false;
 
 static bool s_vibrate_on_disconnect = true;
 static GColor s_text_colour;
@@ -26,6 +27,30 @@ static GColor s_background_colour;
 #define SETTINGS_KEY_VIBRATE 1
 #define SETTINGS_KEY_TEXT_COLOUR 2
 #define SETTINGS_KEY_BACKGROUND_COLOUR 3
+#define SETTINGS_KEY_INVERT_CAT 4
+
+static void update_cat_image()
+{
+    if (s_cat_bitmap)
+		{
+        gbitmap_destroy(s_cat_bitmap);
+        s_cat_bitmap = NULL;
+    }
+
+    if (s_invert_cat)
+		{
+        s_cat_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_INVERT_CAT);
+    }
+		else 
+		{
+        s_cat_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_CAT);
+    }
+
+    if (s_cat_layer)
+		{
+        bitmap_layer_set_bitmap(s_cat_layer, s_cat_bitmap);
+    }
+}
 
 static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
 {
@@ -51,6 +76,10 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
 				{
             s_text_colour = new_text_colour;
             persist_write_int(SETTINGS_KEY_TEXT_COLOUR, colour_val);
+					
+						text_layer_set_text_color(s_time_layer, s_text_colour);
+            text_layer_set_text_color(s_date_layer, s_text_colour);
+            layer_mark_dirty(s_battery_layer);
         }
     }
 	
@@ -64,14 +93,25 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
 				{
             s_background_colour = new_background_colour;
             persist_write_int(SETTINGS_KEY_BACKGROUND_COLOUR, colour_val);
+					
+						window_set_background_color(s_main_window, s_background_colour);
+            layer_mark_dirty(s_battery_layer);
         }
     }
 	
-	window_set_background_color(s_main_window, s_background_colour);
-  text_layer_set_text_color(s_time_layer, s_text_colour);
-  text_layer_set_text_color(s_date_layer, s_text_colour);
-	layer_mark_dirty(s_battery_layer);
-	
+	Tuple* invert_cat_t = dict_find(iter, MESSAGE_KEY_InvertCat);
+    if (invert_cat_t)
+    {
+        bool new_invert_cat = invert_cat_t->value->int32 == 1;
+
+        if (new_invert_cat != s_invert_cat)
+        {
+            s_invert_cat = new_invert_cat;
+            persist_write_bool(SETTINGS_KEY_INVERT_CAT, s_invert_cat);
+            
+            update_cat_image(); 
+        }
+    }
 }
 
 static void battery_update_proc(Layer* layer, GContext* ctx)
@@ -125,8 +165,6 @@ static void main_window_load(Window* window)
         s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_60));
         s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_24));
     #endif
-
-    s_cat_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_CAT);
     
     // Layout variables
     int cat_y, cat_h, date_y, date_h, time_y, time_h, bat_w, bat_x, bat_y;
@@ -138,8 +176,8 @@ static void main_window_load(Window* window)
         date_y = (h * 40) / 100;
         date_h = (h * 15) / 100; 
         
-        time_y = (h * 57) / 100;
-        time_h = (h * 42) / 100; 
+        time_y = (h * 53) / 100;
+        time_h = (h * 45) / 100; 
         
         bat_w = (w * 80) / 100;  
         bat_x = (w - bat_w) / 2;
@@ -162,7 +200,7 @@ static void main_window_load(Window* window)
     // Cat Layer
     s_cat_layer = bitmap_layer_create(GRect(0, cat_y, w, cat_h));
 		bitmap_layer_set_background_color(s_cat_layer, GColorClear);
-    bitmap_layer_set_bitmap(s_cat_layer, s_cat_bitmap);
+    update_cat_image();
 		bitmap_layer_set_compositing_mode(s_cat_layer, GCompOpSet);
     bitmap_layer_set_alignment(s_cat_layer, GAlignCenter);
     layer_add_child(window_layer, bitmap_layer_get_layer(s_cat_layer));
@@ -179,7 +217,6 @@ static void main_window_load(Window* window)
     s_time_layer = text_layer_create(GRect(0, time_y, w, time_h));
     text_layer_set_background_color(s_time_layer, GColorClear);
     text_layer_set_text_color(s_time_layer, s_text_colour);
-    text_layer_set_text(s_time_layer, "00:00");
     text_layer_set_font(s_time_layer, s_time_font);
     text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
     layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
@@ -238,6 +275,7 @@ static void init()
 		s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY_VIBRATE) ? persist_read_bool(SETTINGS_KEY_VIBRATE) : true;
 		s_text_colour = persist_exists(SETTINGS_KEY_TEXT_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_TEXT_COLOUR)) : GColorBlack;
     s_background_colour = persist_exists(SETTINGS_KEY_BACKGROUND_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_BACKGROUND_COLOUR)) : GColorWhite;
+		s_invert_cat = persist_exists(SETTINGS_KEY_INVERT_CAT) ? persist_read_bool(SETTINGS_KEY_INVERT_CAT) : false;
 	
     s_main_window = window_create();
     window_set_background_color(s_main_window, s_background_colour);
@@ -263,9 +301,6 @@ static void init()
     {
         .pebble_app_connection_handler = bluetooth_callback
     });
-
-    // Load the saved setting (default to true)
-    s_vibrate_on_disconnect = persist_exists(SETTINGS_KEY_VIBRATE) ? persist_read_bool(SETTINGS_KEY_VIBRATE) : true;
 
     // Register the handler for the phone
     app_message_register_inbox_received(prv_inbox_received_handler);

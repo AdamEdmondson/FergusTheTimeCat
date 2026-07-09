@@ -13,6 +13,12 @@
         "defaultValue": true
       },
 			{
+ 			 "type": "toggle",
+ 			 "messageKey": "InvertCat",
+  			"label": "Invert Colour for Fergus",
+  			"defaultValue": false
+			},
+			{
         "type": "color",
         "messageKey": "TextColour",
         "label": "Text Colour",
