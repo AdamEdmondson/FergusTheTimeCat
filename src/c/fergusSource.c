@@ -20,6 +20,7 @@ static GFont s_date_font;
 static int s_battery_level;
 static bool s_invert_cat = false;
 static bool s_use_24H = true;
+static time_t s_last_vibrate_time = 0;
 
 static bool s_vibrate_on_disconnect = true;
 static GColor s_text_colour;
@@ -139,13 +140,14 @@ static void battery_update_proc(Layer* layer, GContext* ctx)
 
     int width = (s_battery_level * bounds.size.w) / 100;
 
-    // Background
-    graphics_context_set_fill_color(ctx, s_background_colour);
-    graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-
-    // Bar
     graphics_context_set_fill_color(ctx, s_text_colour);
     graphics_fill_rect(ctx, GRect(0, 0, width, bounds.size.h), 0, GCornerNone);
+	
+	  if (width < bounds.size.w)
+    {
+      graphics_context_set_fill_color(ctx, s_background_colour);
+      graphics_fill_rect(ctx, GRect(width, 0, bounds.size.w - width, bounds.size.h), 0, GCornerNone);
+    }
 }
 
 static void battery_callback(BatteryChargeState state)
@@ -164,7 +166,12 @@ static void bluetooth_callback(bool connected)
 {
     if (!connected && s_vibrate_on_disconnect)
     {
-        vibes_double_pulse();
+        time_t now = time(NULL);
+        if (now - s_last_vibrate_time > 300)
+        {
+            vibes_double_pulse();
+            s_last_vibrate_time = now;
+        }
     }
 }
 
