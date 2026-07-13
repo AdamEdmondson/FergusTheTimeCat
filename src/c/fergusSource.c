@@ -32,6 +32,7 @@ static GColor s_background_colour;
 #define SETTINGS_KEY_USE_24H 5
 
 static void update_time(TimeUnits units_changed);
+static void update_connection_subscription();
 
 static void update_cat_image()
 {
@@ -67,6 +68,7 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
         {
             s_vibrate_on_disconnect = new_vibe;
             persist_write_bool(SETTINGS_KEY_VIBRATE, s_vibrate_on_disconnect);
+						update_connection_subscription();
         }
     }
 	
@@ -138,7 +140,7 @@ static void battery_update_proc(Layer* layer, GContext* ctx)
     int width = (s_battery_level * bounds.size.w) / 100;
 
     // Background
-    graphics_context_set_fill_color(ctx, s_background_colour);s_use_24H = persist_exists(SETTINGS_KEY_USE_24H) ? persist_read_bool(SETTINGS_KEY_USE_24H) : clock_is_24h_style();
+    graphics_context_set_fill_color(ctx, s_background_colour);
     graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 
     // Bar
@@ -163,6 +165,20 @@ static void bluetooth_callback(bool connected)
     if (!connected && s_vibrate_on_disconnect)
     {
         vibes_double_pulse();
+    }
+}
+
+static void update_connection_subscription()
+{
+    if (s_vibrate_on_disconnect)
+    {
+        connection_service_subscribe((ConnectionHandlers) {
+            .pebble_app_connection_handler = bluetooth_callback
+        });
+    }
+    else
+    {
+        connection_service_unsubscribe();
     }
 }
 
@@ -314,11 +330,7 @@ static void init()
     // Displayed from the start
     battery_callback(battery_state_service_peek());
 
-    // Register for Bluetooth updates
-    connection_service_subscribe((ConnectionHandlers)
-    {
-        .pebble_app_connection_handler = bluetooth_callback
-    });
+		update_connection_subscription();
 
     // Register the handler for the phone
     app_message_register_inbox_received(prv_inbox_received_handler);
