@@ -19,6 +19,7 @@ static GFont s_time_font;
 static GFont s_date_font;
 static int s_battery_level;
 static bool s_invert_cat = false;
+static bool s_use_24H = true;
 
 static bool s_vibrate_on_disconnect = true;
 static GColor s_text_colour;
@@ -28,6 +29,9 @@ static GColor s_background_colour;
 #define SETTINGS_KEY_TEXT_COLOUR 2
 #define SETTINGS_KEY_BACKGROUND_COLOUR 3
 #define SETTINGS_KEY_INVERT_CAT 4
+#define SETTINGS_KEY_USE_24H 5
+
+static void update_time(TimeUnits units_changed);
 
 static void update_cat_image()
 {
@@ -112,6 +116,19 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
             update_cat_image(); 
         }
     }
+	
+	Tuple* use_24H_t = dict_find(iter, MESSAGE_KEY_Use24H);
+    if (use_24H_t)
+    {
+        bool new_use_24H = use_24H_t->value->int32 == 1;
+
+        if (new_use_24H != s_use_24H)
+        {
+            s_use_24H = new_use_24H;
+            persist_write_bool(SETTINGS_KEY_USE_24H, s_use_24H);
+            update_time(MINUTE_UNIT);
+        }
+    }
 }
 
 static void battery_update_proc(Layer* layer, GContext* ctx)
@@ -121,7 +138,7 @@ static void battery_update_proc(Layer* layer, GContext* ctx)
     int width = (s_battery_level * bounds.size.w) / 100;
 
     // Background
-    graphics_context_set_fill_color(ctx, s_background_colour);
+    graphics_context_set_fill_color(ctx, s_background_colour);s_use_24H = persist_exists(SETTINGS_KEY_USE_24H) ? persist_read_bool(SETTINGS_KEY_USE_24H) : clock_is_24h_style();
     graphics_fill_rect(ctx, bounds, 0, GCornerNone);
 
     // Bar
@@ -249,7 +266,7 @@ static void update_time(TimeUnits units_changed)
 
     // Write the current hours and minutes into a buffer
     static char s_buffer[8];
-    strftime(s_buffer, sizeof(s_buffer), clock_is_24h_style() ? "%H:%M" : "%I:%M", tick_time);
+    strftime(s_buffer, sizeof(s_buffer), s_use_24H ? "%H:%M" : "%I:%M", tick_time);
 
     // Display time
     text_layer_set_text(s_time_layer, s_buffer);
@@ -276,6 +293,7 @@ static void init()
 		s_text_colour = persist_exists(SETTINGS_KEY_TEXT_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_TEXT_COLOUR)) : GColorBlack;
     s_background_colour = persist_exists(SETTINGS_KEY_BACKGROUND_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_BACKGROUND_COLOUR)) : GColorWhite;
 		s_invert_cat = persist_exists(SETTINGS_KEY_INVERT_CAT) ? persist_read_bool(SETTINGS_KEY_INVERT_CAT) : false;
+		s_use_24H = persist_exists(SETTINGS_KEY_USE_24H) ? persist_read_bool(SETTINGS_KEY_USE_24H) : clock_is_24h_style();
 	
     s_main_window = window_create();
     window_set_background_color(s_main_window, s_background_colour);

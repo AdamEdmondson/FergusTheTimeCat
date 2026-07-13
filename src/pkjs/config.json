@@ -14,6 +14,12 @@
       },
 			{
  			 "type": "toggle",
+ 			 "messageKey": "Use24H",
+  			"label": "Use 24h Time",
+  			"defaultValue": true
+			},
+			{
+ 			 "type": "toggle",
  			 "messageKey": "InvertCat",
   			"label": "Invert Colour for Fergus",
   			"defaultValue": false
