@@ -1,10 +1,10 @@
-// Thanks for downloading my watchface, this is the first thing i've made using the Pebble SDK.
-// I hope you enjoy this little personal project, and your more than welcome to use and adapt this
-// code for future projects you make. A special thanks to Rebble and Core Devices, none of this would have been possible
-// without Rebble's incredibly important preservation work and documentation and Core Devices work on new hardware
-// and introducing me to the Pebble platform.
-// Enjoy this little cat on your wrist!!
-// - Adam Edmondson :)
+/* Thanks for downloading my watchface, this is the first thing i've made using the Pebble SDK.
+   I hope you enjoy this little personal project, and your more than welcome to use and adapt this
+   code for future projects you make. A special thanks to Rebble and Core Devices, none of this would have been possible
+   without Rebble's incredibly important preservation work and documentation and Core Devices work on new hardware
+   and introducing me to the Pebble platform.
+   Enjoy this little cat on your wrist!!
+   - Adam Edmondson :) */
 
 
 #include <pebble.h>
