@@ -20,6 +20,13 @@
         "projectType": "native",
         "resources": {
             "media": [
+				{
+                    "file": "images/pebbleCatCondensed.png",
+                    "menuIcon": true,
+                    "name": "MENU_ICON",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_24",
@@ -72,13 +79,6 @@
                         "diorite",
                         "flint"
                     ],
-                    "type": "bitmap"
-                },
-                {
-                    "file": "images/pebbleCatCondensed.png",
-                    "menuIcon": true,
-                    "name": "MENU_ICON",
-                    "targetPlatforms": null,
                     "type": "bitmap"
                 },
                 {
