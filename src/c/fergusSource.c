@@ -6,13 +6,13 @@
    Enjoy this little cat on your wrist!!
    - Adam Edmondson :) */
 
-
 #include <pebble.h>
 
 static Window* s_main_window;
 static TextLayer* s_time_layer;
 static TextLayer* s_date_layer;
 static Layer* s_battery_layer;
+static Layer* s_quiet_layer;
 static BitmapLayer* s_cat_layer;
 static GBitmap* s_cat_bitmap;
 static GFont s_time_font;
@@ -20,6 +20,8 @@ static GFont s_date_font;
 static int s_battery_level;
 static bool s_invert_cat = false;
 static bool s_use_24H = true;
+static bool s_quiet_active = false;
+static bool s_show_quiet = false;
 static time_t s_last_vibrate_time = 0;
 
 static bool s_vibrate_on_disconnect = true;
@@ -31,6 +33,7 @@ static GColor s_background_colour;
 #define SETTINGS_KEY_BACKGROUND_COLOUR 3
 #define SETTINGS_KEY_INVERT_CAT 4
 #define SETTINGS_KEY_USE_24H 5
+#define SETTINGS_KEY_SHOW_QUIET 6
 
 static void update_time(TimeUnits units_changed);
 static void update_connection_subscription();
@@ -56,6 +59,29 @@ static void update_cat_image()
 		{
         bitmap_layer_set_bitmap(s_cat_layer, s_cat_bitmap);
     }
+}
+
+static void quiet_update_proc(Layer* layer, GContext* ctx)
+{
+    if (!s_quiet_active) return;
+
+    GRect bounds = layer_get_bounds(layer);
+    graphics_context_set_fill_color(ctx, s_text_colour);
+    graphics_fill_rect(ctx, bounds, 0, GCornerNone);
+}
+
+static void check_quiet_time()
+{
+    bool active = s_show_quiet && quiet_time_is_active();
+
+    if (active != s_quiet_active)
+    {
+        s_quiet_active = active;
+        if (s_quiet_layer)
+        {
+            layer_mark_dirty(s_quiet_layer);
+        }
+    }	
 }
 
 static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
@@ -87,6 +113,7 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
 						text_layer_set_text_color(s_time_layer, s_text_colour);
             text_layer_set_text_color(s_date_layer, s_text_colour);
             layer_mark_dirty(s_battery_layer);
+						layer_mark_dirty(s_quiet_layer);
         }
     }
 	
@@ -130,6 +157,19 @@ static void prv_inbox_received_handler(DictionaryIterator* iter, void* context)
             s_use_24H = new_use_24H;
             persist_write_bool(SETTINGS_KEY_USE_24H, s_use_24H);
             update_time(MINUTE_UNIT);
+        }
+    }
+	
+	 Tuple* show_quiet_t = dict_find(iter, MESSAGE_KEY_ShowQuiet);
+    if (show_quiet_t)
+    {
+        bool new_show_quiet = show_quiet_t->value->int32 == 1;
+
+        if (new_show_quiet != s_show_quiet)
+        {
+            s_show_quiet = new_show_quiet;
+            persist_write_bool(SETTINGS_KEY_SHOW_QUIET, s_show_quiet);
+            check_quiet_time();
         }
     }
 }
@@ -197,13 +237,15 @@ static void main_window_load(Window* window)
     int16_t w = bounds.size.w;
     int16_t h = bounds.size.h; 
 
-    // Create Font
+    // Change based on screen size
     #if PBL_DISPLAY_HEIGHT >= 228
         s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_72));
         s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_36));
+				int quiet_size = 8;
     #else
         s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_60));
         s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_digital_24));
+				int quiet_size = 6;
     #endif
     
     // Layout variables
@@ -265,6 +307,14 @@ static void main_window_load(Window* window)
     s_battery_layer = layer_create(GRect(bat_x, bat_y, bat_w, 2));
     layer_set_update_proc(s_battery_layer, battery_update_proc);
     layer_add_child(window_layer, s_battery_layer);
+	
+	  // Quiet Time Layer
+    int quiet_gap = 4;
+    int quiet_x = bat_x - quiet_gap - quiet_size;
+    int quiet_y = bat_y + 1 - (quiet_size / 2);
+    s_quiet_layer = layer_create(GRect(quiet_x, quiet_y, quiet_size, quiet_size));
+    layer_set_update_proc(s_quiet_layer, quiet_update_proc);
+    layer_add_child(window_layer, s_quiet_layer);
 }
 
 static void main_window_unload(Window* window)
@@ -275,6 +325,7 @@ static void main_window_unload(Window* window)
     bitmap_layer_destroy(s_cat_layer);
     gbitmap_destroy(s_cat_bitmap);
     layer_destroy(s_battery_layer);
+	  layer_destroy(s_quiet_layer);
 
     // Unload Fonts
     fonts_unload_custom_font(s_time_font);
@@ -317,6 +368,7 @@ static void init()
     s_background_colour = persist_exists(SETTINGS_KEY_BACKGROUND_COLOUR) ? GColorFromHEX(persist_read_int(SETTINGS_KEY_BACKGROUND_COLOUR)) : GColorWhite;
 		s_invert_cat = persist_exists(SETTINGS_KEY_INVERT_CAT) ? persist_read_bool(SETTINGS_KEY_INVERT_CAT) : false;
 		s_use_24H = persist_exists(SETTINGS_KEY_USE_24H) ? persist_read_bool(SETTINGS_KEY_USE_24H) : clock_is_24h_style();
+	  s_show_quiet = persist_exists(SETTINGS_KEY_SHOW_QUIET) ? persist_read_bool(SETTINGS_KEY_SHOW_QUIET) : true;
 	
     s_main_window = window_create();
     window_set_background_color(s_main_window, s_background_colour);
@@ -344,6 +396,8 @@ static void init()
     app_message_open(128, 128);
 
     update_time(DAY_UNIT | HOUR_UNIT | MINUTE_UNIT);
+	
+		check_quiet_time();
 }
 
 static void deinit() 

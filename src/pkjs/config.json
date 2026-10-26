@@ -20,6 +20,12 @@
 			},
 			{
  			 "type": "toggle",
+ 			 "messageKey": "ShowQuiet",
+ 			 "label": "Show Quiet Time Icon",
+ 			 "defaultValue": true
+			},
+			{
+ 			 "type": "toggle",
  			 "messageKey": "InvertCat",
   			"label": "Invert Colour for Fergus",
   			"defaultValue": false

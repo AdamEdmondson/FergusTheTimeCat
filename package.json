@@ -8,6 +8,9 @@
     ],
     "name": "fergus-the-time-cat",
     "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
         "displayName": "Fergus The Time Cat",
         "enableMultiJS": true,
         "messageKeys": [
@@ -15,18 +18,12 @@
             "TextColour",
             "BackgroundColour",
             "InvertCat",
-            "Use24H"
+            "Use24H",
+            "ShowQuiet"
         ],
         "projectType": "native",
         "resources": {
             "media": [
-                {
-                    "file": "images/pebbleCatCondensed.png",
-                    "menuIcon": true,
-                    "name": "MENU_ICON",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
                 {
                     "file": "fonts/digital.ttf",
                     "name": "digital_24",
@@ -110,6 +107,13 @@
                         "flint"
                     ],
                     "type": "bitmap"
+                },
+                {
+                    "file": "images/pebbleCatCondensed.png",
+                    "menuIcon": true,
+                    "name": "MENU_ICON",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
                 }
             ]
         },
@@ -128,5 +132,5 @@
             "watchface": true
         }
     },
-    "version": "1.6.0"
+    "version": "1.6.1"
 }
